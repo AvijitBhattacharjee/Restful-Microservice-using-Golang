@@ -5,5 +5,10 @@ const (
 	StatusBadRequest   = 400
 	ContentType        = "Content-Type"
 	AppJsonContentType = "application/json"
-	Success            = "Request is successful"
+	Success            = " request is successful"
+	GetBook            = "Getting a book details"
+	GetBooks           = "Getting all book details"
+	UpdateBook         = "Updating one book"
+	DeleteBook         = "Deleting one book"
+	CreateBook         = "Creating one book"
 )

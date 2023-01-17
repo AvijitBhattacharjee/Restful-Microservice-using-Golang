@@ -37,7 +37,7 @@ func getBooks(w http.ResponseWriter, _ *http.Request) {
 		controller.RespondWithError(w, err)
 		return
 	}
-	controller.RespondWithSuccess(w)
+	controller.RespondWithSuccess(w, api.GetBooks)
 }
 
 func updateBooks(w http.ResponseWriter, r *http.Request) {
@@ -65,7 +65,7 @@ func updateBooks(w http.ResponseWriter, r *http.Request) {
 		controller.RespondWithError(w, err)
 		return
 	}
-	controller.RespondWithSuccess(w)
+	controller.RespondWithSuccess(w, api.UpdateBook)
 
 }
 
@@ -80,7 +80,7 @@ func createBooks(w http.ResponseWriter, r *http.Request) {
 		controller.RespondWithError(w, err)
 		return
 	}
-	controller.RespondWithSuccess(w)
+	controller.RespondWithSuccess(w, api.CreateBook)
 }
 
 func getBook(w http.ResponseWriter, r *http.Request) {
@@ -102,7 +102,7 @@ func getBook(w http.ResponseWriter, r *http.Request) {
 		controller.RespondWithError(w, err)
 		return
 	}
-	controller.RespondWithSuccess(w)
+	controller.RespondWithSuccess(w, api.GetBook)
 }
 
 func deleteBooks(w http.ResponseWriter, r *http.Request) {
@@ -120,5 +120,5 @@ func deleteBooks(w http.ResponseWriter, r *http.Request) {
 		controller.RespondWithError(w, err)
 		return
 	}
-	controller.RespondWithSuccess(w)
+	controller.RespondWithSuccess(w, api.DeleteBook)
 }

@@ -8,10 +8,10 @@ import (
 	"net/http"
 )
 
-func RespondWithSuccess(w http.ResponseWriter) {
+func RespondWithSuccess(w http.ResponseWriter, requestType string) {
 	w.Header().Set(api.ContentType, api.AppJsonContentType)
 	w.WriteHeader(api.StatusOK)
-	_, err := io.WriteString(w, api.Success)
+	_, err := io.WriteString(w, requestType+api.Success)
 	if err != nil {
 		_ = fmt.Errorf("error while writing")
 	}

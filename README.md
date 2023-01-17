@@ -7,7 +7,7 @@ All the operations listed below has been implemented via REST API
     3. Discard one book from library if it got damaged.
     4. Reserve one book from library.
     5. Release one book to library.
-    6. Search books by Author..
+    6. Search books by Author.
 
 This microservice has been implemented in golang. All modules having their own uni test cases.
 
