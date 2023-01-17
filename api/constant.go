@@ -11,4 +11,5 @@ const (
 	UpdateBook         = "Updating one book"
 	DeleteBook         = "Deleting one book"
 	CreateBook         = "Creating one book"
+	GetAuthorBook      = "Getting an Author's Book"
 )
