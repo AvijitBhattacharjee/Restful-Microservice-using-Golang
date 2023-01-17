@@ -1,4 +1,4 @@
-package method
+package operation
 
 import (
 	"github.com/gorilla/mux"

@@ -1,4 +1,4 @@
-package method
+package operation
 
 import (
 	"encoding/json"
@@ -41,7 +41,7 @@ func reserveBooks(w http.ResponseWriter, r *http.Request) {
 
 	for _, item := range books {
 		if item.ID == params["id"] {
-			item, err := reserveBook(params, &item)
+			item, err := controller.ReserveBook(params, &item)
 			if err != "" {
 				controller.RespondWithError(w, err)
 				return
@@ -69,7 +69,7 @@ func releaseBooks(w http.ResponseWriter, r *http.Request) {
 
 	for _, item := range books {
 		if item.ID == params["id"] {
-			item, err := releaseBook(params, &item)
+			item, err := controller.ReleaseBook(params, &item)
 			if err != "" {
 				controller.RespondWithError(w, err)
 				return
