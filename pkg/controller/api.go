@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/avijit/api"
 	"io"
@@ -17,13 +16,12 @@ func RespondWithSuccess(w http.ResponseWriter, requestType string) {
 	}
 }
 
-func RespondWithError(w http.ResponseWriter, err error) {
+func RespondWithError(w http.ResponseWriter, errorType string) {
 	w.Header().Set(api.ContentType, api.AppJsonContentType)
 	_ = fmt.Errorf("request validation failed")
 	w.WriteHeader(api.StatusBadRequest)
-	message, _ := json.Marshal(err)
-	_, err = w.Write(message)
+	_, err := io.WriteString(w, errorType)
 	if err != nil {
-		return
+		_ = fmt.Errorf("error while writing")
 	}
 }

@@ -20,7 +20,7 @@ func updateBooks(w http.ResponseWriter, r *http.Request) {
 			book.ID = params["id"]
 			err := json.NewEncoder(w).Encode(book)
 			if err != nil {
-				controller.RespondWithError(w, err)
+				controller.RespondWithError(w, api.EncodingError)
 				return
 			}
 			return
@@ -28,7 +28,7 @@ func updateBooks(w http.ResponseWriter, r *http.Request) {
 	}
 	err := json.NewEncoder(w).Encode(books)
 	if err != nil {
-		controller.RespondWithError(w, err)
+		controller.RespondWithError(w, api.EncodingError)
 		return
 	}
 	controller.RespondWithSuccess(w, api.UpdateBook)
@@ -41,10 +41,14 @@ func reserveBooks(w http.ResponseWriter, r *http.Request) {
 
 	for _, item := range books {
 		if item.ID == params["id"] {
-			item = reserveBook(params, &item)
-			err := json.NewEncoder(w).Encode(item)
-			if err != nil {
+			item, err := reserveBook(params, &item)
+			if err != "" {
 				controller.RespondWithError(w, err)
+				return
+			}
+			err1 := json.NewEncoder(w).Encode(item)
+			if err1 != nil {
+				controller.RespondWithError(w, api.EncodingError)
 				return
 			}
 			return
@@ -52,10 +56,10 @@ func reserveBooks(w http.ResponseWriter, r *http.Request) {
 	}
 	err := json.NewEncoder(w).Encode(books)
 	if err != nil {
-		controller.RespondWithError(w, err)
+		controller.RespondWithError(w, api.EncodingError)
 		return
 	}
-	controller.RespondWithSuccess(w, api.UpdateBook)
+	controller.RespondWithSuccess(w, api.ReserveBook)
 
 }
 
@@ -65,10 +69,14 @@ func releaseBooks(w http.ResponseWriter, r *http.Request) {
 
 	for _, item := range books {
 		if item.ID == params["id"] {
-			item = releaseBook(params, &item)
-			err := json.NewEncoder(w).Encode(item)
-			if err != nil {
+			item, err := releaseBook(params, &item)
+			if err != "" {
 				controller.RespondWithError(w, err)
+				return
+			}
+			err1 := json.NewEncoder(w).Encode(item)
+			if err1 != nil {
+				controller.RespondWithError(w, api.EncodingError)
 				return
 			}
 			return
@@ -76,8 +84,8 @@ func releaseBooks(w http.ResponseWriter, r *http.Request) {
 	}
 	err := json.NewEncoder(w).Encode(books)
 	if err != nil {
-		controller.RespondWithError(w, err)
+		controller.RespondWithError(w, api.EncodingError)
 		return
 	}
-	controller.RespondWithSuccess(w, api.UpdateBook)
+	controller.RespondWithSuccess(w, api.ReleaseBook)
 }

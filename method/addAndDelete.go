@@ -22,7 +22,7 @@ func damageBook(w http.ResponseWriter, r *http.Request) {
 	}
 	err := json.NewEncoder(w).Encode(books)
 	if err != nil {
-		controller.RespondWithError(w, err)
+		controller.RespondWithError(w, api.EncodingError)
 		return
 	}
 	controller.RespondWithSuccess(w, api.DeleteBook)
@@ -36,7 +36,7 @@ func addBooks(w http.ResponseWriter, r *http.Request) {
 	books = append(books, book)
 	err := json.NewEncoder(w).Encode(book)
 	if err != nil {
-		controller.RespondWithError(w, err)
+		controller.RespondWithError(w, api.EncodingError)
 		return
 	}
 	controller.RespondWithSuccess(w, api.CreateBook)

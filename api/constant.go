@@ -12,4 +12,7 @@ const (
 	DeleteBook         = "Deleting one book"
 	CreateBook         = "Creating one book"
 	GetAuthorBook      = "Getting an Author's Book"
+	EncodingError      = "Error while encoding"
+	ReleaseBook        = "Releasing of this Book"
+	ReserveBook        = "Reserving of this Book"
 )
