@@ -1,4 +1,4 @@
-package api
+package config
 
 type Book struct {
 	ID           string        `json:"id"`

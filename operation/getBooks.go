@@ -2,17 +2,17 @@ package operation
 
 import (
 	"encoding/json"
-	"github.com/avijit/api"
-	"github.com/avijit/pkg/controller"
+	"github.com/avijit/config"
+	"github.com/avijit/pkg/handler"
 	"github.com/gorilla/mux"
 	"net/http"
 )
 
 func getBookByAuthor(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set(api.ContentType, api.AppJsonContentType)
+	w.Header().Set(config.ContentType, config.AppJsonContentType)
 	params := mux.Vars(r)
 
-	var authorBook []api.Book
+	var authorBook []config.Book
 
 	for _, item := range books {
 		if item.Author.FirstName == params["id"] || item.Author.LastName == params["id"] {
@@ -21,41 +21,41 @@ func getBookByAuthor(w http.ResponseWriter, r *http.Request) {
 	}
 	err := json.NewEncoder(w).Encode(authorBook)
 	if err != nil {
-		controller.RespondWithError(w, api.EncodingError)
+		handler.RespondWithError(w, config.EncodingError)
 		return
 	}
-	controller.RespondWithSuccess(w, api.GetAuthorBook)
+	handler.RespondWithSuccess(w, config.GetAuthorBook)
 }
 
 func getBook(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set(api.ContentType, api.AppJsonContentType)
+	w.Header().Set(config.ContentType, config.AppJsonContentType)
 	params := mux.Vars(r)
 
 	for _, item := range books {
 		if item.ID == params["id"] {
 			err := json.NewEncoder(w).Encode(item)
 			if err != nil {
-				controller.RespondWithError(w, api.EncodingError)
+				handler.RespondWithError(w, config.EncodingError)
 				return
 			}
 			return
 		}
 	}
-	err := json.NewEncoder(w).Encode(&api.Book{})
+	err := json.NewEncoder(w).Encode(&config.Book{})
 	if err != nil {
-		controller.RespondWithError(w, api.EncodingError)
+		handler.RespondWithError(w, config.EncodingError)
 		return
 	}
-	controller.RespondWithSuccess(w, api.GetBook)
+	handler.RespondWithSuccess(w, config.GetBook)
 }
 
 func getBooks(w http.ResponseWriter, _ *http.Request) {
 
-	w.Header().Set(api.ContentType, api.AppJsonContentType)
+	w.Header().Set(config.ContentType, config.AppJsonContentType)
 	err := json.NewEncoder(w).Encode(&books)
 	if err != nil {
-		controller.RespondWithError(w, api.EncodingError)
+		handler.RespondWithError(w, config.EncodingError)
 		return
 	}
-	controller.RespondWithSuccess(w, api.GetBooks)
+	handler.RespondWithSuccess(w, config.GetBooks)
 }

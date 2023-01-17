@@ -2,14 +2,14 @@ package operation
 
 import (
 	"encoding/json"
-	"github.com/avijit/api"
-	"github.com/avijit/pkg/controller"
+	"github.com/avijit/config"
+	"github.com/avijit/pkg/handler"
 	"github.com/gorilla/mux"
 	"net/http"
 )
 
 func damageBook(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set(api.ContentType, api.AppJsonContentType)
+	w.Header().Set(config.ContentType, config.AppJsonContentType)
 	params := mux.Vars(r)
 
 	for index, item := range books {
@@ -20,8 +20,8 @@ func damageBook(w http.ResponseWriter, r *http.Request) {
 	}
 	err := json.NewEncoder(w).Encode(books)
 	if err != nil {
-		controller.RespondWithError(w, api.EncodingError)
+		handler.RespondWithError(w, config.EncodingError)
 		return
 	}
-	controller.RespondWithSuccess(w, api.DeleteBook)
+	handler.RespondWithSuccess(w, config.DeleteBook)
 }
