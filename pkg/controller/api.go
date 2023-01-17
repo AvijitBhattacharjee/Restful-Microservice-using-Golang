@@ -22,5 +22,8 @@ func RespondWithError(w http.ResponseWriter, err error) {
 	_ = fmt.Errorf("request validation failed")
 	w.WriteHeader(api.StatusBadRequest)
 	message, _ := json.Marshal(err)
-	w.Write(message)
+	_, err = w.Write(message)
+	if err != nil {
+		return
+	}
 }

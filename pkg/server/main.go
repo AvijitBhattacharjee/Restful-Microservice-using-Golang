@@ -14,7 +14,7 @@ func main() {
 	// handlers endpoints
 	err := method.Crud(router)
 	if err != nil {
-		fmt.Errorf("error while handling endpoints")
+		_ = fmt.Errorf("error while handling endpoints")
 	}
 	log.Fatal(http.ListenAndServe("localhost:8080", router))
 }

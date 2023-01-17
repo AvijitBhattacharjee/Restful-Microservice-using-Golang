@@ -52,7 +52,7 @@ func getBook(w http.ResponseWriter, r *http.Request) {
 func getBooks(w http.ResponseWriter, _ *http.Request) {
 
 	w.Header().Set(api.ContentType, api.AppJsonContentType)
-	err := json.NewEncoder(w).Encode(filterBook(&books))
+	err := json.NewEncoder(w).Encode(&books)
 	if err != nil {
 		controller.RespondWithError(w, err)
 		return
