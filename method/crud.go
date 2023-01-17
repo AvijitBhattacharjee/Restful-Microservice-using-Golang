@@ -19,19 +19,29 @@ func Crud(router *mux.Router) error {
 		FirstName: "Arijit", LastName: "Bhattacharjee"}})
 	books = append(books, api.Book{ID: "2", ISBN: "102", Price: 200, Author: &api.Author{
 		FirstName: "Abhishek", LastName: "Banerjee"}})
-	books = append(books, api.Book{ID: "1", ISBN: "103", Price: 300, Author: &api.Author{
+	books = append(books, api.Book{ID: "3", ISBN: "103", Price: 300, Author: &api.Author{
 		FirstName: "Arijit", LastName: "Mukherjee"}})
 	books = append(books, api.Book{ID: "4", ISBN: "104", Price: 400, Author: &api.Author{
 		FirstName: "Abhishek", LastName: "Ganguly"}})
 
 	router.HandleFunc("/api/books", getBooks).Methods("GET")
 	router.HandleFunc("/api/books/{id}", getBook).Methods("GET")
-	router.HandleFunc("/api/books", createBooks).Methods("POST")
+	router.HandleFunc("/api/books", addBooks).Methods("POST")
 	router.HandleFunc("/api/books/{id}", updateBooks).Methods("PUT")
-	router.HandleFunc("/api/books/{id}", deleteBooks).Methods("DELETE")
+	router.HandleFunc("/api/books/{id}", reserveBook).Methods("PUT")
+	router.HandleFunc("/api/books/{id}", releaseBook).Methods("PUT")
+	router.HandleFunc("/api/books/{id}", damageBook).Methods("DELETE")
 	router.HandleFunc("/api/books/author/{id}", getBookByAuthor).Methods("GET")
 
 	return nil
+}
+
+func releaseBook(w http.ResponseWriter, r *http.Request) {
+	
+}
+
+func reserveBook(w http.ResponseWriter, r *http.Request) {
+
 }
 
 func getBookByAuthor(w http.ResponseWriter, r *http.Request) {
@@ -93,7 +103,7 @@ func updateBooks(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func createBooks(w http.ResponseWriter, r *http.Request) {
+func addBooks(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set(api.ContentType, api.AppJsonContentType)
 	var book api.Book
 	_ = json.NewDecoder(r.Body).Decode(&book)
@@ -129,7 +139,7 @@ func getBook(w http.ResponseWriter, r *http.Request) {
 	controller.RespondWithSuccess(w, api.GetBook)
 }
 
-func deleteBooks(w http.ResponseWriter, r *http.Request) {
+func damageBook(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set(api.ContentType, api.AppJsonContentType)
 	params := mux.Vars(r)
 
