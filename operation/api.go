@@ -11,7 +11,7 @@ func Crud(router *mux.Router) error {
 	// mock data
 	books = append(books, config.Book{ID: "1", ISBN: "101", Price: 100, Author: &config.Author{
 		FirstName: "Arijit", LastName: "Bhattacharjee"}, Availability: &config.Availability{
-		Available: 10, Booked: 0,
+		Available: 2, Booked: 0,
 	}})
 	books = append(books, config.Book{ID: "2", ISBN: "102", Price: 200, Author: &config.Author{
 		FirstName: "Abhishek", LastName: "Banerjee"}, Availability: &config.Availability{
@@ -28,12 +28,13 @@ func Crud(router *mux.Router) error {
 
 	router.HandleFunc("/config/books", getBooks).Methods("GET")
 	router.HandleFunc("/config/books/{id}", getBook).Methods("GET")
+	router.HandleFunc("/config/books/author/{id}", getBookByAuthor).Methods("GET")
+	router.HandleFunc("/config/books/available/{id}", getAvailableBook).Methods("GET")
 	router.HandleFunc("/config/add/books", addBooks).Methods("POST")
 	router.HandleFunc("/config/update/books/{id}", updateBooks).Methods("PUT")
 	router.HandleFunc("/config/reserve/books/{id}", reserveBooks).Methods("PUT")
 	router.HandleFunc("/config/release/books/{id}", releaseBooks).Methods("PUT")
 	router.HandleFunc("/config/damage/books/{id}", damageBook).Methods("DELETE")
-	router.HandleFunc("/config/books/author/{id}", getBookByAuthor).Methods("GET")
 
 	return nil
 }
