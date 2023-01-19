@@ -17,6 +17,8 @@ const (
 	InvalidRequest     = "Requested number is not valid"
 	ReleaseBook        = "Releasing of this Book"
 	ReserveBook        = "Reserving of this Book"
+	Reserved           = "Book got reserved"
+	Released           = "Book got released"
 	NoRelease          = "this book is in full stock, can not release"
 	NoReserve          = "This book is not available for booking"
 )

@@ -42,7 +42,7 @@ func reserveBooks(w http.ResponseWriter, r *http.Request) {
 	for _, item := range books {
 		if item.ID == params["id"] {
 			item, err := handler.ReserveBook(params, &item)
-			if err != "" {
+			if err != "Book got reserved" {
 				handler.RespondWithError(w, err)
 				return
 			}

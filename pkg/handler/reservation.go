@@ -9,7 +9,7 @@ func ReserveBook(params map[string]string, book *config.Book) (config.Book, stri
 	}
 	book.Availability.Available--
 	book.Availability.Booked++
-	return *book, ""
+	return *book, config.Reserved
 }
 
 func ReleaseBook(params map[string]string, book *config.Book) (config.Book, string) {
@@ -19,5 +19,5 @@ func ReleaseBook(params map[string]string, book *config.Book) (config.Book, stri
 	}
 	book.Availability.Available++
 	book.Availability.Booked--
-	return *book, ""
+	return *book, config.Released
 }
