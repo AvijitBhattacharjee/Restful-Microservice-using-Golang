@@ -7,16 +7,16 @@ import (
 )
 
 var paramMockSuccess = map[string]string{"id": "1"}
-var bookMockSuccess = config.Book{Availability: &config.Availability{
-	Available: 2,
-	Booked:    2,
-}}
 var bookMockFail = config.Book{Availability: &config.Availability{
 	Available: 0,
 	Booked:    0,
 }}
 
 func TestReserveBookWithSuccess(t *testing.T) {
+	var bookMockSuccess = config.Book{Availability: &config.Availability{
+		Available: 2,
+		Booked:    2,
+	}}
 	bookResult, msg := ReserveBook(paramMockSuccess, &bookMockSuccess)
 	assert.Equal(t, config.Reserved, msg)
 	assert.Equal(t, 1, bookResult.Availability.Available)
@@ -29,6 +29,10 @@ func TestReserveBookWithError(t *testing.T) {
 }
 
 func TestReleaseBookWithSuccess(t *testing.T) {
+	var bookMockSuccess = config.Book{Availability: &config.Availability{
+		Available: 2,
+		Booked:    2,
+	}}
 	bookResult, msg := ReleaseBook(paramMockSuccess, &bookMockSuccess)
 	assert.Equal(t, config.Released, msg)
 	assert.Equal(t, 3, bookResult.Availability.Available)
