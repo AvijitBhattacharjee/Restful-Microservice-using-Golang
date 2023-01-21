@@ -18,9 +18,10 @@ func updateBooks(w http.ResponseWriter, r *http.Request) {
 			var book config.Book
 			_ = json.NewDecoder(r.Body).Decode(&book)
 			book.ID = params["id"]
+			books = append(books, book)
 			err := json.NewEncoder(w).Encode(book)
 			if err != nil {
-				handler.RespondWithError(w, config.EncodingError)
+				handler.RespondWithError(w, http.StatusBadRequest, config.EncodingError)
 				return
 			}
 			return
@@ -28,10 +29,10 @@ func updateBooks(w http.ResponseWriter, r *http.Request) {
 	}
 	err := json.NewEncoder(w).Encode(books)
 	if err != nil {
-		handler.RespondWithError(w, config.EncodingError)
+		handler.RespondWithError(w, http.StatusBadRequest, config.EncodingError)
 		return
 	}
-	handler.RespondWithSuccess(w, config.UpdateBook)
+	handler.RespondWithJSON(w, http.StatusOK, config.UpdateBook+config.Success)
 
 }
 
@@ -43,12 +44,12 @@ func reserveBooks(w http.ResponseWriter, r *http.Request) {
 		if item.ID == params["id"] {
 			item, err := handler.ReserveBook(params, &item)
 			if err != "Book got reserved" {
-				handler.RespondWithError(w, err)
+				handler.RespondWithError(w, http.StatusBadRequest, err)
 				return
 			}
 			err1 := json.NewEncoder(w).Encode(item)
 			if err1 != nil {
-				handler.RespondWithError(w, config.EncodingError)
+				handler.RespondWithError(w, http.StatusBadRequest, config.EncodingError)
 				return
 			}
 			return
@@ -56,10 +57,10 @@ func reserveBooks(w http.ResponseWriter, r *http.Request) {
 	}
 	err := json.NewEncoder(w).Encode(books)
 	if err != nil {
-		handler.RespondWithError(w, config.EncodingError)
+		handler.RespondWithError(w, http.StatusBadRequest, config.EncodingError)
 		return
 	}
-	handler.RespondWithSuccess(w, config.ReserveBook)
+	handler.RespondWithJSON(w, http.StatusOK, config.ReserveBook+config.Success)
 
 }
 
@@ -71,12 +72,12 @@ func releaseBooks(w http.ResponseWriter, r *http.Request) {
 		if item.ID == params["id"] {
 			item, err := handler.ReleaseBook(params, &item)
 			if err != "" {
-				handler.RespondWithError(w, err)
+				handler.RespondWithError(w, http.StatusBadRequest, err)
 				return
 			}
 			err1 := json.NewEncoder(w).Encode(item)
 			if err1 != nil {
-				handler.RespondWithError(w, config.EncodingError)
+				handler.RespondWithError(w, http.StatusBadRequest, config.EncodingError)
 				return
 			}
 			return
@@ -84,8 +85,8 @@ func releaseBooks(w http.ResponseWriter, r *http.Request) {
 	}
 	err := json.NewEncoder(w).Encode(books)
 	if err != nil {
-		handler.RespondWithError(w, config.EncodingError)
+		handler.RespondWithError(w, http.StatusBadRequest, config.EncodingError)
 		return
 	}
-	handler.RespondWithSuccess(w, config.ReleaseBook)
+	handler.RespondWithJSON(w, http.StatusOK, config.ReleaseBook+config.Success)
 }

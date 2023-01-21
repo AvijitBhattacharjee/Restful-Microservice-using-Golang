@@ -22,10 +22,10 @@ func getBookByAuthor(w http.ResponseWriter, r *http.Request) {
 	}
 	err := json.NewEncoder(w).Encode(authorBook)
 	if err != nil {
-		handler.RespondWithError(w, config.EncodingError)
+		handler.RespondWithError(w, http.StatusBadRequest, config.EncodingError)
 		return
 	}
-	handler.RespondWithSuccess(w, config.GetAuthorBook)
+	handler.RespondWithJSON(w, http.StatusOK, config.GetAuthorBook+config.Success)
 }
 
 func getBook(w http.ResponseWriter, r *http.Request) {
@@ -36,7 +36,7 @@ func getBook(w http.ResponseWriter, r *http.Request) {
 		if item.ID == params["id"] {
 			err := json.NewEncoder(w).Encode(item)
 			if err != nil {
-				handler.RespondWithError(w, config.EncodingError)
+				handler.RespondWithError(w, http.StatusBadRequest, config.EncodingError)
 				return
 			}
 			return
@@ -44,10 +44,10 @@ func getBook(w http.ResponseWriter, r *http.Request) {
 	}
 	err := json.NewEncoder(w).Encode(&config.Book{})
 	if err != nil {
-		handler.RespondWithError(w, config.EncodingError)
+		handler.RespondWithError(w, http.StatusBadRequest, config.EncodingError)
 		return
 	}
-	handler.RespondWithSuccess(w, config.GetBook)
+	handler.RespondWithJSON(w, http.StatusOK, config.GetBook+config.Success)
 }
 
 func getBooks(w http.ResponseWriter, _ *http.Request) {
@@ -55,10 +55,10 @@ func getBooks(w http.ResponseWriter, _ *http.Request) {
 	w.Header().Set(config.ContentType, config.AppJsonContentType)
 	err := json.NewEncoder(w).Encode(&books)
 	if err != nil {
-		handler.RespondWithError(w, config.EncodingError)
+		handler.RespondWithError(w, http.StatusBadRequest, config.EncodingError)
 		return
 	}
-	handler.RespondWithSuccess(w, config.GetBooks)
+	handler.RespondWithJSON(w, http.StatusOK, config.GetBooks+config.Success)
 }
 
 func getAvailableBook(w http.ResponseWriter, r *http.Request) {
@@ -70,7 +70,7 @@ func getAvailableBook(w http.ResponseWriter, r *http.Request) {
 	for _, item := range books {
 		availability, err := strconv.Atoi(params["id"])
 		if err != nil {
-			handler.RespondWithError(w, config.EncodingError)
+			handler.RespondWithError(w, http.StatusBadRequest, config.EncodingError)
 			return
 		}
 		if item.Availability.Available >= availability {
@@ -79,8 +79,8 @@ func getAvailableBook(w http.ResponseWriter, r *http.Request) {
 	}
 	err := json.NewEncoder(w).Encode(authorBook)
 	if err != nil {
-		handler.RespondWithError(w, config.InvalidRequest)
+		handler.RespondWithError(w, http.StatusBadRequest, config.InvalidRequest)
 		return
 	}
-	handler.RespondWithSuccess(w, config.GetAvailableBook)
+	handler.RespondWithJSON(w, http.StatusOK, config.GetAvailableBook+config.Success)
 }

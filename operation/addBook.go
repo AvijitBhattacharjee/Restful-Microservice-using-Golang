@@ -17,8 +17,8 @@ func addBooks(w http.ResponseWriter, r *http.Request) {
 	books = append(books, book)
 	err := json.NewEncoder(w).Encode(book)
 	if err != nil {
-		handler.RespondWithError(w, config.EncodingError)
+		handler.RespondWithError(w, http.StatusBadRequest, config.EncodingError)
 		return
 	}
-	handler.RespondWithSuccess(w, config.CreateBook)
+	handler.RespondWithJSON(w, http.StatusOK, config.CreateBook+config.Success)
 }

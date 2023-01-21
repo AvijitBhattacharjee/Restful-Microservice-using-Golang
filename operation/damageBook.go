@@ -20,8 +20,8 @@ func damageBook(w http.ResponseWriter, r *http.Request) {
 	}
 	err := json.NewEncoder(w).Encode(books)
 	if err != nil {
-		handler.RespondWithError(w, config.EncodingError)
+		handler.RespondWithError(w, http.StatusBadRequest, config.EncodingError)
 		return
 	}
-	handler.RespondWithSuccess(w, config.DeleteBook)
+	handler.RespondWithJSON(w, http.StatusOK, config.DeleteBook)
 }
