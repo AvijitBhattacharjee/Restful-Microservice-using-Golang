@@ -14,7 +14,6 @@ func RespondWithError(w http.ResponseWriter, code int, message string) {
 	// set headers and write response
 	w.Header().Set(config.ContentType, config.AppJsonContentType)
 	w.WriteHeader(code)
-	fmt.Println(response)
 	_, err := w.Write(response)
 	if err != nil {
 		return

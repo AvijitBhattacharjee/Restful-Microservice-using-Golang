@@ -1,8 +1,8 @@
 package operation
 
 import (
+	"bytes"
 	"encoding/json"
-	"fmt"
 	"github.com/avijit/config"
 	"github.com/gorilla/mux"
 	"github.com/stretchr/testify/assert"
@@ -42,11 +42,9 @@ func TestReserveBookWithError(t *testing.T) {
 	router.ServeHTTP(rr, req)
 
 	assert.Equal(t, http.StatusBadRequest, rr.Code)
-	fmt.Println(rr.Result())
 
 	var book config.Book
 	err = json.Unmarshal(rr.Body.Bytes(), &book)
-	fmt.Println(book.Availability)
 	assert.Equal(t, config.EmptyString, book.ID)
 }
 
@@ -88,4 +86,31 @@ func TestReleaseBookWithError(t *testing.T) {
 	var book config.Book
 	err = json.Unmarshal(rr.Body.Bytes(), &book)
 	assert.Equal(t, config.EmptyString, book.ID)
+}
+
+func TestUpdateBook(t *testing.T) {
+	var jsonStr = []byte(`{   
+    "isbn": "ISBN05",
+    "Price": 6999,
+    "author": {"firstname": "Ankit", "lastname": "Mondal"},
+    "availability": {"available": 10,"booked": 0}
+}`)
+	req, _ := http.NewRequest("PUT", "/config/update/books/5", bytes.NewBuffer(jsonStr))
+	rr := httptest.NewRecorder()
+	router := mux.NewRouter()
+	_, err := Crud(router)
+	if err != nil {
+		t.Fatal("Error while routing")
+	}
+	router.HandleFunc("/config/update/books/{id}", updateBooks)
+	router.ServeHTTP(rr, req)
+
+	assert.Equal(t, http.StatusOK, rr.Code)
+
+	var book config.Book
+	err = json.Unmarshal(rr.Body.Bytes(), &book)
+	assert.Equal(t, "ISBN05", book.ISBN)
+	assert.Equal(t, 6999, book.Price)
+	assert.Equal(t, 10, book.Availability.Available)
+	assert.Equal(t, "Ankit", book.Author.FirstName)
 }

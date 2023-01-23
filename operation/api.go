@@ -27,6 +27,11 @@ func Crud(router *mux.Router) ([]config.Book, error) {
 		Available: 10, Booked: 0,
 	}})
 
+	books = append(books, config.Book{ID: "5", ISBN: "1104", Price: 7400, Author: &config.Author{
+		FirstName: "Anindya", LastName: "Shankar"}, Availability: &config.Availability{
+		Available: 8, Booked: 2,
+	}})
+
 	router.HandleFunc("/config/books", getBooks).Methods("GET")
 	router.HandleFunc("/config/books/{id}", getBook).Methods("GET")
 	router.HandleFunc("/config/books/author/{id}", getBookByAuthor).Methods("GET")
