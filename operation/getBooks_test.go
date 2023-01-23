@@ -18,7 +18,7 @@ func TestGetAvailabilityBookWithSuccess(t *testing.T) {
 	if err != nil {
 		t.Fatal("Error while routing")
 	}
-	//router.HandleFunc("/config/books", getBooks)
+	router.HandleFunc("/config/books", getAvailableBook)
 	router.ServeHTTP(rr, req)
 
 	assert.Equal(t, http.StatusOK, rr.Code)
@@ -39,7 +39,7 @@ func TestGetAllBookWithSuccess(t *testing.T) {
 	if err != nil {
 		t.Fatal("Error while routing")
 	}
-	//router.HandleFunc("/config/books", getBooks)
+	router.HandleFunc("/config/books", getBooks)
 	router.ServeHTTP(rr, req)
 
 	assert.Equal(t, http.StatusOK, rr.Code)
@@ -58,7 +58,7 @@ func TestGetSingleBookWithSuccess(t *testing.T) {
 	if err != nil {
 		t.Fatal("Error while routing")
 	}
-	//router.HandleFunc("/config/books/{id}", getBook)
+	router.HandleFunc("/config/books/{id}", getBook)
 	router.ServeHTTP(rr, req)
 
 	assert.Equal(t, http.StatusOK, rr.Code)
@@ -78,7 +78,7 @@ func TestGetSingleBookWithWrongID(t *testing.T) {
 	if err != nil {
 		t.Fatal("Error while routing")
 	}
-	//router.HandleFunc("/config/books/{id}", getBook)
+	router.HandleFunc("/config/books/{id}", getBook)
 	router.ServeHTTP(rr, req)
 
 	assert.Equal(t, http.StatusOK, rr.Code)
@@ -97,7 +97,7 @@ func TestGetAuthorBookWithSuccess(t *testing.T) {
 	if err != nil {
 		t.Fatal("Error while routing")
 	}
-	router.HandleFunc("/config/books/author/{id}", getBooks)
+	router.HandleFunc("/config/books/author/{id}", getBookByAuthor)
 	router.ServeHTTP(rr, req)
 
 	assert.Equal(t, http.StatusOK, rr.Code)
