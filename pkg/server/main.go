@@ -12,9 +12,12 @@ func main() {
 	router := mux.NewRouter()
 
 	// handlers endpoints
-	err := operation.Crud(router)
+	books, err := operation.Crud(router)
 	if err != nil {
 		_ = fmt.Errorf("error while handling endpoints")
+	}
+	if books == nil {
+		log.Fatal("no books are there")
 	}
 	log.Fatal(http.ListenAndServe("localhost:8080", router))
 }

@@ -7,7 +7,8 @@ import (
 
 var books []config.Book
 
-func Crud(router *mux.Router) error {
+func Crud(router *mux.Router) ([]config.Book, error) {
+
 	// mock data
 	books = append(books, config.Book{ID: "1", ISBN: "101", Price: 100, Author: &config.Author{
 		FirstName: "Arijit", LastName: "Bhattacharjee"}, Availability: &config.Availability{
@@ -36,5 +37,5 @@ func Crud(router *mux.Router) error {
 	router.HandleFunc("/config/release/books/{id}", releaseBooks).Methods("PUT")
 	router.HandleFunc("/config/damage/books/{id}", damageBook).Methods("DELETE")
 
-	return nil
+	return books, nil
 }

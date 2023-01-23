@@ -9,6 +9,7 @@ import (
 func TestCrud(t *testing.T) {
 
 	routerTest := mux.NewRouter()
-	err := Crud(routerTest)
+	books, err := Crud(routerTest)
+	assert.NotEmpty(t, books)
 	assert.Equal(t, nil, err)
 }
