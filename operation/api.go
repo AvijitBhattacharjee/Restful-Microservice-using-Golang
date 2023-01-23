@@ -16,7 +16,7 @@ func Crud(router *mux.Router) ([]config.Book, error) {
 	}})
 	books = append(books, config.Book{ID: "2", ISBN: "102", Price: 200, Author: &config.Author{
 		FirstName: "Abhishek", LastName: "Banerjee"}, Availability: &config.Availability{
-		Available: 8, Booked: 0,
+		Available: 0, Booked: 2,
 	}})
 	books = append(books, config.Book{ID: "3", ISBN: "103", Price: 300, Author: &config.Author{
 		FirstName: "Arijit", LastName: "Mukherjee"}, Availability: &config.Availability{
@@ -33,8 +33,8 @@ func Crud(router *mux.Router) ([]config.Book, error) {
 	router.HandleFunc("/config/books/available/{id}", getAvailableBook).Methods("GET")
 	router.HandleFunc("/config/add/books", addBooks).Methods("POST")
 	router.HandleFunc("/config/update/books/{id}", updateBooks).Methods("PUT")
-	router.HandleFunc("/config/reserve/books/{id}", reserveBooks).Methods("PUT")
-	router.HandleFunc("/config/release/books/{id}", releaseBooks).Methods("PUT")
+	router.HandleFunc("/config/reserve/books/{id}", reserveBooks).Methods("GET")
+	router.HandleFunc("/config/release/books/{id}", releaseBooks).Methods("GET")
 	router.HandleFunc("/config/damage/books/{id}", damageBook).Methods("DELETE")
 
 	return books, nil

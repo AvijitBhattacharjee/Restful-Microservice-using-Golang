@@ -85,7 +85,7 @@ func TestGetSingleBookWithWrongID(t *testing.T) {
 
 	var book config.Book
 	err = json.Unmarshal(rr.Body.Bytes(), &book)
-	assert.Equal(t, "", book.ID)
+	assert.Equal(t, config.EmptyString, book.ID)
 
 }
 

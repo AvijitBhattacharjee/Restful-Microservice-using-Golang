@@ -1,8 +1,6 @@
 package config
 
 const (
-	StatusOK           = 200
-	StatusBadRequest   = 400
 	ContentType        = "Content-Type"
 	AppJsonContentType = "application/json"
 	Success            = " request is successful"
@@ -21,4 +19,5 @@ const (
 	Released           = "Book got released"
 	NoRelease          = "this book is in full stock, can not release"
 	NoReserve          = "This book is not available for booking"
+	EmptyString        = ""
 )

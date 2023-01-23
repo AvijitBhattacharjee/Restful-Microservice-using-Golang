@@ -71,7 +71,7 @@ func releaseBooks(w http.ResponseWriter, r *http.Request) {
 	for _, item := range books {
 		if item.ID == params["id"] {
 			item, err := handler.ReleaseBook(params, &item)
-			if err != "" {
+			if err != "Book got released" {
 				handler.RespondWithError(w, http.StatusBadRequest, err)
 				return
 			}
