@@ -35,5 +35,4 @@ func TestAddBook(t *testing.T) {
 	assert.Equal(t, "isbnUpdated", book.ISBN)
 	assert.Equal(t, 10, book.Availability.Available)
 	assert.Equal(t, "Sourav", book.Author.FirstName)
-
 }
