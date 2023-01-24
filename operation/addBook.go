@@ -14,9 +14,14 @@ func addBooks(w http.ResponseWriter, r *http.Request) {
 	var book config.Book
 	_ = json.NewDecoder(r.Body).Decode(&book)
 	book.ID = strconv.Itoa(rand.Intn(1000))
+	book, err := handler.ValidateBook(&book)
+	if err != "book input is valid" {
+		handler.RespondWithError(w, http.StatusNonAuthoritativeInfo, config.EncodingError)
+		return
+	}
 	books = append(books, book)
-	err := json.NewEncoder(w).Encode(book)
-	if err != nil {
+	err1 := json.NewEncoder(w).Encode(book)
+	if err1 != nil {
 		handler.RespondWithError(w, http.StatusBadRequest, config.EncodingError)
 		return
 	}

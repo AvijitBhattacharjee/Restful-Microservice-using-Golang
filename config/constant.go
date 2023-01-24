@@ -20,4 +20,8 @@ const (
 	NoRelease          = "this book is in full stock, can not release"
 	NoReserve          = "This book is not available for booking"
 	EmptyString        = ""
+	NoAuthor           = "book author can not be empty"
+	InvalidBook        = "book price or isbn can not be empty"
+	NoAvailability     = "availability of the book is invalid "
+	ValidBook          = "book input is valid"
 )
