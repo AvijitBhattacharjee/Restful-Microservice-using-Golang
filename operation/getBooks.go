@@ -10,8 +10,7 @@ import (
 )
 
 func getBookByAuthor(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set(config.ContentType, config.AppJsonContentType)
-	params := mux.Vars(r)
+	params := configParams(w, r)
 	var flag = false
 
 	var authorBook []config.Book
@@ -35,8 +34,7 @@ func getBookByAuthor(w http.ResponseWriter, r *http.Request) {
 }
 
 func getBook(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set(config.ContentType, config.AppJsonContentType)
-	params := mux.Vars(r)
+	params := configParams(w, r)
 	var flag = false
 
 	for _, item := range books {
@@ -74,8 +72,7 @@ func getBooks(w http.ResponseWriter, _ *http.Request) {
 }
 
 func getAvailableBook(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set(config.ContentType, config.AppJsonContentType)
-	params := mux.Vars(r)
+	params := configParams(w, r)
 
 	var authorBook []config.Book
 
@@ -99,4 +96,10 @@ func getAvailableBook(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	handler.RespondWithJSON(w, http.StatusOK, config.GetAvailableBook+config.Success)
+}
+
+func configParams(w http.ResponseWriter, r *http.Request) map[string]string {
+	w.Header().Set(config.ContentType, config.AppJsonContentType)
+	params := mux.Vars(r)
+	return params
 }

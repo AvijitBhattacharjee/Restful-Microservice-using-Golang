@@ -4,13 +4,11 @@ import (
 	"encoding/json"
 	"github.com/avijit/config"
 	"github.com/avijit/pkg/handler"
-	"github.com/gorilla/mux"
 	"net/http"
 )
 
 func damageBook(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set(config.ContentType, config.AppJsonContentType)
-	params := mux.Vars(r)
+	params := configParams(w, r)
 	var flag = false
 
 	for index, item := range books {

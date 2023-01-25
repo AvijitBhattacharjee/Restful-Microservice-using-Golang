@@ -3,7 +3,7 @@ package handler
 import "github.com/avijit/config"
 
 func ValidateBook(book *config.Book) (config.Book, string) {
-	if book.Availability.Available <= 0 || book.Availability.Booked >= 1 {
+	if book.Availability.Available <= 0 {
 		return config.Book{}, config.NoAvailability
 	}
 	if book.Price <= 0 || book.ISBN == "" {
