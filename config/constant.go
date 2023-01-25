@@ -24,4 +24,5 @@ const (
 	InvalidBook        = "book price or isbn can not be empty"
 	NoAvailability     = "availability of the book is invalid "
 	ValidBook          = "book input is valid"
+	InvalidID          = "Wrong ID given"
 )

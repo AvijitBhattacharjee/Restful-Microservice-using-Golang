@@ -12,13 +12,19 @@ import (
 func getBookByAuthor(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set(config.ContentType, config.AppJsonContentType)
 	params := mux.Vars(r)
+	var flag = false
 
 	var authorBook []config.Book
 
 	for _, item := range books {
 		if item.Author.FirstName == params["id"] || item.Author.LastName == params["id"] {
+			flag = true
 			authorBook = append(authorBook, item)
 		}
+	}
+	if flag == false {
+		handler.RespondWithError(w, http.StatusBadRequest, config.InvalidID)
+		return
 	}
 	err := json.NewEncoder(w).Encode(authorBook)
 	if err != nil {
@@ -31,9 +37,11 @@ func getBookByAuthor(w http.ResponseWriter, r *http.Request) {
 func getBook(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set(config.ContentType, config.AppJsonContentType)
 	params := mux.Vars(r)
+	var flag = false
 
 	for _, item := range books {
 		if item.ID == params["id"] {
+			flag = true
 			err := json.NewEncoder(w).Encode(item)
 			if err != nil {
 				handler.RespondWithError(w, http.StatusBadRequest, config.EncodingError)
@@ -41,6 +49,10 @@ func getBook(w http.ResponseWriter, r *http.Request) {
 			}
 			return
 		}
+	}
+	if flag == false {
+		handler.RespondWithError(w, http.StatusBadRequest, config.InvalidID)
+		return
 	}
 	err := json.NewEncoder(w).Encode(&config.Book{})
 	if err != nil {
@@ -70,7 +82,11 @@ func getAvailableBook(w http.ResponseWriter, r *http.Request) {
 	for _, item := range books {
 		availability, err := strconv.Atoi(params["id"])
 		if err != nil {
-			handler.RespondWithError(w, http.StatusBadRequest, config.EncodingError)
+			handler.RespondWithError(w, http.StatusBadRequest, config.InvalidID)
+			return
+		}
+		if availability <= 0 {
+			handler.RespondWithError(w, http.StatusBadRequest, config.NoAvailability)
 			return
 		}
 		if item.Availability.Available >= availability {
