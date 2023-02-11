@@ -17,15 +17,15 @@ func TestReserveBookWithSuccess(t *testing.T) {
 		Available: 2,
 		Booked:    2,
 	}}
-	bookResult, msg := ReserveBook(paramMockSuccess, &bookMockSuccess)
-	assert.Equal(t, config.Reserved, msg)
-	assert.Equal(t, 1, bookResult.Availability.Available)
-	assert.Equal(t, 3, bookResult.Availability.Booked)
+	err := ReserveBook(paramMockSuccess, &bookMockSuccess)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, 1, bookMockSuccess.Availability.Available)
+	assert.Equal(t, 3, bookMockSuccess.Availability.Booked)
 }
 
 func TestReserveBookWithError(t *testing.T) {
-	_, msg := ReserveBook(paramMockSuccess, &bookMockFail)
-	assert.Equal(t, config.NoReserve, msg)
+	err := ReserveBook(paramMockSuccess, &bookMockFail)
+	assert.Contains(t, err.Error(), config.NoReserve)
 }
 
 func TestReleaseBookWithSuccess(t *testing.T) {
@@ -33,13 +33,13 @@ func TestReleaseBookWithSuccess(t *testing.T) {
 		Available: 2,
 		Booked:    2,
 	}}
-	bookResult, msg := ReleaseBook(paramMockSuccess, &bookMockSuccess)
-	assert.Equal(t, config.Released, msg)
-	assert.Equal(t, 3, bookResult.Availability.Available)
-	assert.Equal(t, 1, bookResult.Availability.Booked)
+	err := ReleaseBook(paramMockSuccess, &bookMockSuccess)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, 3, bookMockSuccess.Availability.Available)
+	assert.Equal(t, 1, bookMockSuccess.Availability.Booked)
 }
 
 func TestReleaseBookWithError(t *testing.T) {
-	_, msg := ReleaseBook(paramMockSuccess, &bookMockFail)
-	assert.Equal(t, config.NoRelease, msg)
+	err := ReleaseBook(paramMockSuccess, &bookMockFail)
+	assert.Contains(t, err.Error(), config.NoRelease)
 }

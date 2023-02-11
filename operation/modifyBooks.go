@@ -55,9 +55,9 @@ func reserveBooks(w http.ResponseWriter, r *http.Request) {
 	for _, item := range books {
 		if item.ID == params["id"] {
 			flag = true
-			item, err := handler.ReserveBook(params, &item)
-			if err != "Book got reserved" {
-				handler.RespondWithError(w, http.StatusBadRequest, err)
+			err := handler.ReserveBook(params, &item)
+			if err != nil {
+				handler.RespondWithError(w, http.StatusBadRequest, config.NoReserve)
 				return
 			}
 			err1 := json.NewEncoder(w).Encode(item)
@@ -89,9 +89,9 @@ func releaseBooks(w http.ResponseWriter, r *http.Request) {
 	for _, item := range books {
 		if item.ID == params["id"] {
 			flag = true
-			item, err := handler.ReleaseBook(params, &item)
-			if err != "Book got released" {
-				handler.RespondWithError(w, http.StatusBadRequest, err)
+			err := handler.ReleaseBook(params, &item)
+			if err != nil {
+				handler.RespondWithError(w, http.StatusBadRequest, config.NoRelease)
 				return
 			}
 			err1 := json.NewEncoder(w).Encode(item)
