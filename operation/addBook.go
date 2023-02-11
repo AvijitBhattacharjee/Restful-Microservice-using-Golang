@@ -16,7 +16,7 @@ func addBooks(w http.ResponseWriter, r *http.Request) {
 	book.ID = strconv.Itoa(rand.Intn(1000))
 	err := handler.ValidateBook(&book)
 	if err != nil {
-		handler.RespondWithError(w, http.StatusNonAuthoritativeInfo, "DOnt Know")
+		handler.RespondWithError(w, http.StatusNonAuthoritativeInfo, err.Error())
 		return
 	}
 	books = append(books, book)

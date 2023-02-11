@@ -22,7 +22,7 @@ func updateBooks(w http.ResponseWriter, r *http.Request) {
 			book.ID = params["id"]
 			err := handler.ValidateBook(&book)
 			if err != nil {
-				handler.RespondWithError(w, http.StatusNonAuthoritativeInfo, config.EncodingError)
+				handler.RespondWithError(w, http.StatusNonAuthoritativeInfo, err.Error())
 				return
 			}
 			books = append(books, book)
@@ -57,7 +57,7 @@ func reserveBooks(w http.ResponseWriter, r *http.Request) {
 			flag = true
 			err := handler.ReserveBook(params, &item)
 			if err != nil {
-				handler.RespondWithError(w, http.StatusBadRequest, config.NoReserve)
+				handler.RespondWithError(w, http.StatusBadRequest, err.Error())
 				return
 			}
 			err1 := json.NewEncoder(w).Encode(item)
@@ -91,7 +91,7 @@ func releaseBooks(w http.ResponseWriter, r *http.Request) {
 			flag = true
 			err := handler.ReleaseBook(params, &item)
 			if err != nil {
-				handler.RespondWithError(w, http.StatusBadRequest, config.NoRelease)
+				handler.RespondWithError(w, http.StatusBadRequest, err.Error())
 				return
 			}
 			err1 := json.NewEncoder(w).Encode(item)
