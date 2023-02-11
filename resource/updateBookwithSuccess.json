@@ -1,0 +1,6 @@
+{
+  "isbn": "ISBN05",
+  "Price": 6999,
+  "author": {"firstname": "Ankit", "lastname": "Mondal"},
+  "availability": {"available": 10,"booked": 0}
+}

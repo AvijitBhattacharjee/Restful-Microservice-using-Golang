@@ -60,7 +60,7 @@ func TestGetSingleBookWithWrongID(t *testing.T) {
 	req, _ := http.NewRequest("GET", "/config/books/21", nil)
 	rr, _ := commonResponseGetBook(t, req)
 
-	assert.Equal(t, http.StatusOK, rr.Code)
+	assert.Equal(t, http.StatusBadRequest, rr.Code)
 
 	var book config.Book
 	err := json.Unmarshal(rr.Body.Bytes(), &book)
