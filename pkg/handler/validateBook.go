@@ -1,16 +1,22 @@
 package handler
 
-import "github.com/avijit/config"
+import (
+	"fmt"
+	"github.com/avijit/config"
+)
 
-func ValidateBook(book *config.Book) (config.Book, string) {
+func ValidateBook(book *config.Book) error {
+	if book == nil {
+		return fmt.Errorf("nil book")
+	}
 	if book.Availability.Available <= 0 {
-		return config.Book{}, config.NoAvailability
+		return fmt.Errorf(config.NoAvailability)
 	}
 	if book.Price <= 0 || book.ISBN == "" {
-		return config.Book{}, config.InvalidBook
+		return fmt.Errorf(config.InvalidBook)
 	}
 	if book.Author.FirstName == "" || book.Author.LastName == "" {
-		return config.Book{}, config.NoAuthor
+		return fmt.Errorf(config.NoAuthor)
 	}
-	return *book, config.ValidBook
+	return nil
 }

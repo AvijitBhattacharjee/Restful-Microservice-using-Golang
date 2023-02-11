@@ -42,33 +42,42 @@ func TestValidateBook(t *testing.T) {
 	tests := []struct {
 		name           string
 		inputPayload   config.Book
+		wantErr        bool
 		expectedOutput string
 	}{
 		{
 			name:           "Book with zero availability",
 			inputPayload:   book1,
+			wantErr:        true,
 			expectedOutput: config.NoAvailability,
 		},
 		{
 			name:           "Book with empty ISBN and price 0",
 			inputPayload:   book2,
+			wantErr:        true,
 			expectedOutput: config.InvalidBook,
 		},
 		{
 			name:           "Book with empty author name",
 			inputPayload:   book3,
+			wantErr:        true,
 			expectedOutput: config.NoAuthor,
 		},
 		{
 			name:           "Valid Book Input",
 			inputPayload:   book4,
-			expectedOutput: config.ValidBook,
+			wantErr:        false,
+			expectedOutput: "nil",
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(*testing.T) {
-			_, err := ValidateBook(&tt.inputPayload)
-			assert.Equal(t, tt.expectedOutput, err)
+			err := ValidateBook(&tt.inputPayload)
+			if tt.wantErr == true {
+				assert.EqualErrorf(t, err, tt.expectedOutput, "Invalid Book Body")
+			} else {
+				assert.Equal(t, err, nil, "Valid Book Body")
+			}
 		})
 	}
 }

@@ -20,8 +20,8 @@ func updateBooks(w http.ResponseWriter, r *http.Request) {
 			var book config.Book
 			_ = json.NewDecoder(r.Body).Decode(&book)
 			book.ID = params["id"]
-			book, err := handler.ValidateBook(&book)
-			if err != "book input is valid" {
+			err := handler.ValidateBook(&book)
+			if err != nil {
 				handler.RespondWithError(w, http.StatusNonAuthoritativeInfo, config.EncodingError)
 				return
 			}
